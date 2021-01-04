@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from django.contrib.auth import authenticatie, login
+from django.contrib.auth import authenticate, login
 from .forms import LoginForm
 
 def user_login(request):
@@ -12,11 +12,11 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request,user)
-                    return HttpResponse('Authenticated' 'successfully')
+                    return HttpResponse('Authenticated successfully')
                 else:
                     return HttpResponse('Disable Account')
             else:
                 return HttpResponse('Invalid Login')
     else:
         form=LoginForm()
-    return render(request, 'account, login.html', {'form': form})
+    return render(request, 'account/login.html', {'form': form})
