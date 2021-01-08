@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
-        <link href="{% static "css/base.css" %}" rel="stylesheet">
+        <link href='{% static 'css/base.css' %}' rel='stylesheet'>
     </head>
     <body>
-        <div id="header">
-            <span class="logo">Bookmarks</span>
+        <div id='header'>
+            <span class='logo'>Paybackgas</span>
             {% if request.user.is_authenticated %}
                 <ul class="menu">
                     <li {% if section == "dashboard" %} class = "selected"{% endif %}>

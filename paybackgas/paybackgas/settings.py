@@ -31,13 +31,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'account.apps.AccountConfig',
+    # 'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',   
+    'django.contrib.staticfiles',
+    'api.apps.ApiConfig',
+    'rest_framework',  
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -120,13 +123,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'dashboard'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+# LOGIN_REDIRECT_URL = 'dashboard' #redirects user AFTER SUCCESSFUL login
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'carr916@gmail.com'
-EMAIL_HOST_PASSWORD = 'e12131995'
-EMAIL_USE_TLS = True
+# # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'carr916@gmail.com'
+# EMAIL_HOST_PASSWORD = 'e12131995'
+# EMAIL_USE_TLS = True
