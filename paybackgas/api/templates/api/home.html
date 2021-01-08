@@ -6,10 +6,23 @@
 <h1>Home</h1>
 <p>Please, use the following form to calcuate trip cost: </p>
 <form method='get'>
-    {% for field in form %}
-        {{ field }}
+    <div class='formula-section' id='mpg-section'>
+        <h4>Enter Miles Per Gallon</h4>
+        {{ form.mpg }}
         <p>or</p>
-    {% endfor %}
+        <input type='submit' value='Calculate mpg'></input>
+    </div>
+    <div class='formula-section' id='distance-section'>
+        <h4>Enter Distance</h4>
+        {{ form.distance }}
+        <p>or</p>
+        <input type='submit' value='Calculate distance'></input>
+    </div>
+    <div class='formula-section' value='gasprice'>
+        <h4>Enter Gas Price</h4>
+        {{ form.gasprice }}
+    </div>
+    
     {% csrf_token %}
     <p><input type="submit" value="Calculate"></p>
 </form>

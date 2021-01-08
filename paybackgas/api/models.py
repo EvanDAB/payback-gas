@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 
 # Create your models here.
 class SimpleCalculatorModel(models.Model):
@@ -7,11 +7,15 @@ class SimpleCalculatorModel(models.Model):
     gasprice=models.DecimalField(max_digits=4, decimal_places=3, null=False)
     distance=models.DecimalField(max_digits=7, decimal_places=2, null=False)
 
-# class MPGCalculator(models.Model):
-#     currentyear = date.year()
-#     print(currentyear)
-#     # def setChoiceValues(iterator, value):
-#     #     return (iterator, value)
-#     # class Year(models.IntegerChoices):
+class MPGCalculatorModel(models.Model):
+    now = datetime.datetime.now()
+    currentyear = now.year
+    global caryears
+    caryears = []
+    caryearsrange = currentyear - 1984
+    for i in range(caryearsrange+1):
+        caryears.append((i, 1984+i))
+    print(caryears)
 
-#     # year=models.Integer
+    # class YearChoices(models.IntegerChoices):
+    #     year = models.IntegerField(choices=caryears)
