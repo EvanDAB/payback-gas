@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from .forms import SimpleCalculatorForm
+from .forms import SimpleCalculatorForm, MPGCalculatorForm
 from decimal import Decimal 
 # Create your views here.
 def main(request):
@@ -17,3 +17,8 @@ def main(request):
         
     return render(request, 'api/home.html', {'form' : form})
     # return HttpResponse('MAIN')
+
+def mpgCalc(request):
+    if request.method=='GET':
+        form =  MPGCalculatorForm(request.GET)
+        return render(request, 'api/mpg.html', {'form' : form})

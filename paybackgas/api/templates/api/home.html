@@ -6,24 +6,14 @@
 <h1>Home</h1>
 <p>Please, use the following form to calcuate trip cost: </p>
 <form method='get'>
-    <div class='formula-section' id='mpg-section'>
-        <h4>Enter Miles Per Gallon</h4>
-        {{ form.mpg }}
-        <p>or</p>
-        <input type='submit' value='Calculate mpg'></input>
-    </div>
-    <div class='formula-section' id='distance-section'>
-        <h4>Enter Distance</h4>
-        {{ form.distance }}
-        <p>or</p>
-        <input type='submit' value='Calculate distance'></input>
-    </div>
-    <div class='formula-section' value='gasprice'>
-        <h4>Enter Gas Price</h4>
-        {{ form.gasprice }}
-    </div>
-    
-    {% csrf_token %}
-    <p><input type="submit" value="Calculate"></p>
+    <label>Enter MPG</label>
+    {{ form.mpg }}
+    <p>Don't know your MPG? <a href="{% url 'mpg' %}">Click Here</a></p>
+    <label>Enter Distance Traveled</label>
+    {{ form.distance }}
+    <p>Don't knowyour distance traveled? <a href='#'>Click Here</a></p>
+    <label>Enter Gas Price</label>
+    {{ form.gasprice}}
+    <p><input type="submit" value="Calculate"></p> 
 </form>
 {% endblock %}
