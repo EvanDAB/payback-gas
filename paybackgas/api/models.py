@@ -1,6 +1,9 @@
 from django.db import models
 import datetime
-
+import requests
+import bs4
+import urllib3
+from bs4 import BeautifulSoup
 # Create your models here.
 
 #Simple Calcualor Model 
