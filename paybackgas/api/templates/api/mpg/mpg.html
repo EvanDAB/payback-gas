@@ -5,5 +5,6 @@
 {% block content %}
 <h2>MPG Calculator</h2>
 {{ form.as_p }}
+{% csrf_token %}
 
 {% endblock %}

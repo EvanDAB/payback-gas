@@ -21,4 +21,4 @@ def main(request):
 def mpgCalc(request):
     if request.method=='GET':
         form =  MPGCalculatorForm(request.GET)
-        return render(request, 'api/mpg.html', {'form' : form})
+        return render(request, 'api/mpg/mpg.html', {'form' : form})

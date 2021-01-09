@@ -12,3 +12,6 @@ class MPGCalculatorForm(ModelForm):
     class Meta:
         model=MPGCalculatorModel
         fields="__all__"
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['year'].queryset = Year.objects.none()
