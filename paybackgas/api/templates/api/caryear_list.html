@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>List of Years</h1>
+{% for yr in year %}
+    <p>{{ yr }}</p>
+{% endfor %}
+{% endblock %}

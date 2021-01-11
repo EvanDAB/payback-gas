@@ -9,44 +9,61 @@ from bs4 import BeautifulSoup
 #Simple Calcualor Model 
 class SimpleCalculatorModel(models.Model):
     mpg=models.DecimalField(max_digits=4, decimal_places=2, null=False)
-    gasprice=models.DecimalField(max_digits=4, decimal_places=3, null=False)
+    gas_price=models.DecimalField(max_digits=4, decimal_places=3, null=False)
     distance=models.DecimalField(max_digits=7, decimal_places=2, null=False)
 
-#Adv. MPG Calculator
-# class CarYear(models.Model):
-#     year = models.IntegerField()
-#     def __str__(self):
-#         return self.year
+# Adv. MPG Calculator
+class CarYear(models.Model):
+    year = models.IntegerField()
 
-# class CarMake(models.Model):
-#     year = models.ForeignKey(CarYear, on_delete=models.CASCADE)
-#     make = models.CharField(max_length=40)
-#     def __str__(self):
-#         return self.make
+    def __str__(self):
+        return self.year
 
-# class CarModel(models.Model):
-#     year = models.ForeignKey(CarYear, on_delete=models.CASCADE)
-#     make = models.ForeignKey(CarMake, on_delete=models.SET_NULL, blank=True, null=True)
-#     model = models.CharField(max_length=100)
-#     def __str__(self):
-#         return self.make
+class CarMake(models.Model):
+    year = models.ForeignKey(CarYear, on_delete=models.CASCADE)
+    make = models.CharField(max_length=40)
 
-# class CarModelOptions(models.Model):
-#     year = models.ForeignKey(CarYear, on_delete=models.CASCADE)
-#     make = models.ForeignKey(CarMake, on_delete=models.SET_NULL, blank=True, null=True)
-#     model = models.ForeignKey(CarModel, on_delete=models.SET_NULL, blank=True, null=True)
-#     modelOptions = models.CharField(max_length=100)
-    
+    def __str__(self):
+        return self.make
+
+class CarModel(models.Model):
+    year = models.ForeignKey(CarYear, on_delete=models.CASCADE)
+    make = models.ForeignKey(CarMake, on_delete=models.SET_NULL, blank=True, null=True)
+    model = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.make
+
+class CarModelOptions(models.Model):
+    year = models.ForeignKey(CarYear, on_delete=models.CASCADE)
+    make = models.ForeignKey(CarMake, on_delete=models.SET_NULL, blank=True, null=True)
+    model = models.ForeignKey(CarModel, on_delete=models.SET_NULL, blank=True, null=True)
+    model_options = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.model_options
+
+# Returns vehilce ID
+class AdvMPGCalculatorModel(models.Model):
+    year = models.ForeignKey(CarYear, on_delete=models.CASCADE)
+    make = models.ForeignKey(CarMake, on_delete=models.SET_NULL, blank=True, null=True)
+    model = models.ForeignKey(CarModel, on_delete=models.SET_NULL, blank=True, null=True)
+    model_options = models.ForeignKey(CarModelOptions, on_delete=models.SET_NULL, blank=True, null=True)
+    vehicle_id = models.IntegerField()
+
+    def __str__(self):
+        return self.vehicle_id
+
 class MPGCalculatorModel(models.Model):
     now = datetime.datetime.now()
-    global currentyear
-    currentyear = now.year
-    global caryears
-    caryears = []
-    caryearsrange = currentyear - 1984
-    for i in range(caryearsrange+1):
-        caryears.append((i, 1984+i))
+    global current_year
+    current_year = now.year
+    global car_years
+    car_years = []
+    car_years_range = current_year - 1984
+    for i in range(car_years_range+1):
+        car_years.append((i, 1984+i))
 
     class CarYear(models.IntegerChoices):
-        caryears
-    year = models.IntegerField(choices=caryears)
+        car_years
+    year = models.IntegerField(choices=car_years)
