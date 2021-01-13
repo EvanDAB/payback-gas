@@ -4,10 +4,20 @@
 
 {% block content %}
 <h2>MPG Calculator</h2>
-{{ form.as_p }}
-<p>make</p>
-<div id='id_make'></div>
 {% csrf_token %}
+<div>
+    <label>Year</label>
+    {{ form.year }}
+</div>
+<div>
+    <label>Make</label>
+    <select id='dev_make'></select>
+</div>
+<div>
+    <label>Model</label>
+    <select id='dev_model'></select>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     console.log('HEllo')
@@ -25,17 +35,59 @@
             'year': year
             },
             success: function(responseData) {
-                console.log(responseData); // #document -> <menuItems><menuItem>....</menuItems>
-                var makeList = responseData.getElementsByTagName('menuItems')[0].childNodes;
-                // console.log(makeList);
-                console.log(makeList.length);
-                for(var i=0; i < makeList.length; i++) {
-                    console.log(makeList[i].getElementsByTagName('value')[0]['textContent']);
+                var makeListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
+                console.log(makeListData.length);
+                var makeList = [];
+                for(var i=0; i < makeListData.length; i++) {
+                    var item = makeListData[i].getElementsByTagName('value')[0]['textContent'];
+                    console.log(item);
+                    makeList.push({i, item});
                 }
+                console.log(makeList);
+                var html_data = '<option value="">-------</option>';
+                makeList.forEach(function(item){
+                    console.log(item);
+                    html_data += `<option value=${item.i}>${item.item}</option>"`
+                })
+                console.log(html_data);
+                $("#dev_make").html(html_data);
                 debugger;
             }
-            
         })
+    });
+    $('#dev_make').change(function() {
+        console.log('something changed');
+        var yearVal = $(this).val();
+        var year = 1984 + parseInt(yearVal);
+        console.log('year is ', year);
+        var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/make?year=' + year.toString();
+        console.log(url);
+
+        $.ajax({
+            url: url,
+            data: {
+            'year': year
+            },
+            success: function(responseData) {
+                var makeListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
+                console.log(makeListData.length);
+                var makeList = [];
+                for(var i=0; i < makeListData.length; i++) {
+                    var item = makeListData[i].getElementsByTagName('value')[0]['textContent'];
+                    console.log(item);
+                    makeList.push({i, item});
+                }
+                console.log(makeList);
+                var html_data = '<option value="">-------</option>';
+                makeList.forEach(function(item){
+                    console.log(item);
+                    html_data += `<option value=${item.i}>${item.item}</option>"`
+                })
+                console.log(html_data);
+                $("#dev_make").html(html_data);
+                debugger;
+            }
+        });
     });
 </script>
 {% endblock %}

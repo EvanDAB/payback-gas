@@ -1,8 +1,7 @@
+
 from django.contrib import admin
-from .models import CarYear, CarMake, CarModel, CarModelOptions
+from .models import MPGCalculatorModel
 
 # Register your models here.
-admin.site.register(CarYear)
-admin.site.register(CarMake)
-admin.site.register(CarModel)
-admin.site.register(CarModelOptions)
+# admin.site.register(Year)
+admin.site.register(MPGCalculatorModel)
