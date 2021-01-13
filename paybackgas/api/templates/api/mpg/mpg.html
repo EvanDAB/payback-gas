@@ -20,11 +20,13 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    console.log('HEllo')
+    console.log('HEllo');
+    var globalYear;
     $('#id_year').change(function() {
         console.log('something changed');
         var yearVal = $(this).val();
         var year = 1984 + parseInt(yearVal);
+        globalYear = year;
         console.log('year is ', year);
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/make?year=' + year.toString();
         console.log(url);
@@ -47,7 +49,7 @@
                 var html_data = '<option value="">-------</option>';
                 makeList.forEach(function(item){
                     console.log(item);
-                    html_data += `<option value=${item.i}>${item.item}</option>"`
+                    html_data += `<option id="make_id_${item.i}" value="${item.item}">${item.item}</option>"`
                 })
                 console.log(html_data);
                 $("#dev_make").html(html_data);
@@ -56,38 +58,34 @@
         })
     });
     $('#dev_make').change(function() {
-        console.log('something changed');
-        var yearVal = $(this).val();
-        var year = 1984 + parseInt(yearVal);
-        console.log('year is ', year);
-        var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/make?year=' + year.toString();
-        console.log(url);
-
+        var make = $(this).val();
+        console.log(make);
+        console.log(globalYear);
+        var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/model?year=' + globalYear.toString() + '&make=' + make;
         $.ajax({
             url: url,
             data: {
-            'year': year
+                'make': make
             },
             success: function(responseData) {
-                var makeListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
-                console.log(makeListData.length);
-                var makeList = [];
-                for(var i=0; i < makeListData.length; i++) {
-                    var item = makeListData[i].getElementsByTagName('value')[0]['textContent'];
+                var modelListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
+                console.log(modelListData)
+                var modelList = [];
+                for(var i=0; i < modelListData.length; i++) {
+                    var item = modelListData[i].getElementsByTagName('value')[0]['textContent'];
                     console.log(item);
-                    makeList.push({i, item});
+                    modelList.push({i, item});
                 }
-                console.log(makeList);
+                console.log(modelList);
                 var html_data = '<option value="">-------</option>';
-                makeList.forEach(function(item){
+                modelList.forEach(function(item){
                     console.log(item);
-                    html_data += `<option value=${item.i}>${item.item}</option>"`
+                    html_data += `<option id="model_id_${item.i}" value="${item.item}">${item.item}</option>"`
                 })
                 console.log(html_data);
-                $("#dev_make").html(html_data);
-                debugger;
+                $("#dev_model").html(html_data);
             }
-        });
+        })
     });
 </script>
 {% endblock %}
