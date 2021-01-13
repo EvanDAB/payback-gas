@@ -17,11 +17,19 @@
     <label>Model</label>
     <select id='dev_model'></select>
 </div>
+<div>
+    <label>Model Options</label>
+    <select id='dev_model_options'></select>
+</div>
+<div>
+    <label>Your Average MPG</label>
+    <div id='final_mpg'></div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     console.log('HEllo');
-    var globalYear;
+    var globalYear, globalMake, globalModel, globalModelOptions;
     $('#id_year').change(function() {
         console.log('something changed');
         var yearVal = $(this).val();
@@ -59,6 +67,7 @@
     });
     $('#dev_make').change(function() {
         var make = $(this).val();
+        globalMake = make;
         console.log(make);
         console.log(globalYear);
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/model?year=' + globalYear.toString() + '&make=' + make;
@@ -85,6 +94,64 @@
                 console.log(html_data);
                 $("#dev_model").html(html_data);
             }
+        });
+    });
+    $('#dev_model').change(function() {
+        var model = $(this).val();
+        globalModel = model;
+        console.log(model)
+        var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/options?year='+ globalYear.toString() + '&make=' + globalMake + '&model=' + model
+        $.ajax({
+            url: url,
+            data: {
+                'model': model
+            },
+            success: function(responseData) {
+                console.log('Should get options')
+                console.log(url)
+                console.log(responseData)
+                var modelOptionsListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
+                console.log(modelOptionsListData)
+                var modelOptionsList = [];
+                for(var i=0; i < modelOptionsListData.length; i++) {
+                    var item = modelOptionsListData[i].getElementsByTagName('value')[0]['textContent'];
+                    console.log(item);
+                    modelOptionsList.push({i, item});
+                }
+                console.log(modelOptionsList);
+                var html_data = '<option value="">-------</option>';
+                modelOptionsList.forEach(function(item){
+                    console.log(item);
+                    html_data += `<option id="model_options_id_${item.i}" value="${item.item}">${item.item}</option>"`
+                })
+                console.log(html_data);
+                $("#dev_model_options").html(html_data);
+            }
+        });
+        $('#dev_model_options').change(function() {
+            var modelOptions = $(this).val();
+            globalModelOptions = modelOptions;
+            console.log(modelOptions);
+            // https://fueleconomy.gov/ws/rest/ympg/shared/ympgVehicle/26425
+            var url = 'https://fueleconomy.gov/ws/rest/ympg/shared/ympgVehicle/' + modelOptions.toString();
+            $.ajax({
+                url: url,
+                data: {
+                    'modelOptions': modelOptions
+                },
+                success: function(responseData) {
+                    console.log(url);
+                    console.log(responseData);
+                    if(responseData == undefined) $('#final_mpg').html('<h1>WE were unable to find the MPG for this vehicle</h1>')
+                    else {
+                        var modelOptionsListData = responseData.getElementsByTagName('avgMpg')[0];
+                        console.log(modelOptionsListData['textContent'])
+                        var finalMpg = modelOptionsListData['textContent'];
+                        $('#final_mpg').html(`<h1>${finalMpg}</h1>`)
+                        debugger;
+                    }
+                }
+            })
         })
     });
 </script>
