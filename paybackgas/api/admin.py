@@ -1,7 +1,6 @@
 
 from django.contrib import admin
-from .models import MPGCalculatorModel
+from .models import MPGCalculatorModel, DistanceCalculatorModel
 
 # Register your models here.
-# admin.site.register(Year)
 admin.site.register(MPGCalculatorModel)

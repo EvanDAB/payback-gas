@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.views.generic import ListView
-from .forms import SimpleCalculatorForm
-from .forms import MPGCalculatorForm
-# from .models import Year
-# from .models import CarYear, CarMake, CarModel, CarModelOptions
-from decimal import Decimal 
+from .forms import SimpleCalculatorForm, MPGCalculatorForm, DistanceCalculatorForm
+from decimal import Decimal
+
 # Create your views here.
 def main(request):
     if request.method == 'GET':
@@ -27,13 +25,6 @@ def mpgCalc(request):
         form =  MPGCalculatorForm(request.GET)
         return render(request, 'api/mpg/mpg.html', {'form' : form })
 
-#AJAX
-# def load_makes(request):
-#     year = request.GET.get('year')
-#     print(year)
-#     return render(request, 'api/mpg/make_dropdown_list_options.html', {'makes': makes})
-
-# class CarYearListView(ListView):
-#         model = CarYear
-#         form_class = AdvMPGCalculatorForm
-#         context_object_name = 'car year'
+def distanceCalc(request):
+    form = DistanceCalculatorForm
+    return render(request, 'api/distance/distance.html', {'form': form })

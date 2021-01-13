@@ -11,15 +11,15 @@
 </div>
 <div>
     <label>Make</label>
-    <select id='dev_make'></select>
+    <select id='make'></select>
 </div>
 <div>
     <label>Model</label>
-    <select id='dev_model'></select>
+    <select id='model'></select>
 </div>
 <div>
     <label>Model Options</label>
-    <select id='dev_model_options'></select>
+    <select id='model_options'></select>
 </div>
 <div>
     <label>Your Average MPG</label>
@@ -28,17 +28,12 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    console.log('HEllo');
-    var globalYear, globalMake, globalModel, globalModelOptions;
+    var globalYear, globalMake, globalModel;
     $('#id_year').change(function() {
-        console.log('something changed');
         var yearVal = $(this).val();
         var year = 1984 + parseInt(yearVal);
         globalYear = year;
-        console.log('year is ', year);
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/make?year=' + year.toString();
-        console.log(url);
-
         $.ajax({
             url: url,
             data: {
@@ -46,30 +41,22 @@
             },
             success: function(responseData) {
                 var makeListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
-                console.log(makeListData.length);
                 var makeList = [];
                 for(var i=0; i < makeListData.length; i++) {
                     var item = makeListData[i].getElementsByTagName('value')[0]['textContent'];
-                    console.log(item);
                     makeList.push({i, item});
                 }
-                console.log(makeList);
                 var html_data = '<option value="">-------</option>';
                 makeList.forEach(function(item){
-                    console.log(item);
                     html_data += `<option id="make_id_${item.i}" value="${item.item}">${item.item}</option>"`
                 })
-                console.log(html_data);
-                $("#dev_make").html(html_data);
-                debugger;
+                $("#make").html(html_data);
             }
         })
     });
-    $('#dev_make').change(function() {
+    $('#make').change(function() {
         var make = $(this).val();
         globalMake = make;
-        console.log(make);
-        console.log(globalYear);
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/model?year=' + globalYear.toString() + '&make=' + make;
         $.ajax({
             url: url,
@@ -78,28 +65,22 @@
             },
             success: function(responseData) {
                 var modelListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
-                console.log(modelListData)
                 var modelList = [];
                 for(var i=0; i < modelListData.length; i++) {
                     var item = modelListData[i].getElementsByTagName('value')[0]['textContent'];
-                    console.log(item);
                     modelList.push({i, item});
                 }
-                console.log(modelList);
                 var html_data = '<option value="">-------</option>';
                 modelList.forEach(function(item){
-                    console.log(item);
                     html_data += `<option id="model_id_${item.i}" value="${item.item}">${item.item}</option>"`
                 })
-                console.log(html_data);
-                $("#dev_model").html(html_data);
+                $("#model").html(html_data);
             }
         });
     });
-    $('#dev_model').change(function() {
+    $('#model').change(function() {
         var model = $(this).val();
         globalModel = model;
-        console.log(model)
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/options?year='+ globalYear.toString() + '&make=' + globalMake + '&model=' + model
         $.ajax({
             url: url,
@@ -107,46 +88,34 @@
                 'model': model
             },
             success: function(responseData) {
-                console.log('Should get options')
-                console.log(url)
-                console.log(responseData)
                 var modelOptionsListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
-                console.log(modelOptionsListData)
                 var modelOptionsList = [];
                 for(var i=0; i < modelOptionsListData.length; i++) {
-                    var item = modelOptionsListData[i].getElementsByTagName('value')[0]['textContent'];
-                    console.log(item);
-                    modelOptionsList.push({i, item});
+                    var text = modelOptionsListData[i].getElementsByTagName('text')[0]['textContent'];
+                    var value = modelOptionsListData[i].getElementsByTagName('value')[0]['textContent'];
+                    modelOptionsList.push({i, text, value});
                 }
-                console.log(modelOptionsList);
                 var html_data = '<option value="">-------</option>';
                 modelOptionsList.forEach(function(item){
-                    console.log(item);
-                    html_data += `<option id="model_options_id_${item.i}" value="${item.item}">${item.item}</option>"`
+                    html_data += `<option id="model_options_id_${item.i}" value="${item.value}">${item.text}</option>"`
                 })
-                console.log(html_data);
-                $("#dev_model_options").html(html_data);
+                $("#model_options").html(html_data);
             }
         });
-        $('#dev_model_options').change(function() {
-            var modelOptions = $(this).val();
-            globalModelOptions = modelOptions;
-            console.log(modelOptions);
-            // https://fueleconomy.gov/ws/rest/ympg/shared/ympgVehicle/26425
-            var url = 'https://fueleconomy.gov/ws/rest/ympg/shared/ympgVehicle/' + modelOptions.toString();
+        $('#model_options').change(function() {
+            var vehicleId = $(this).val();
+            var url = 'https://fueleconomy.gov/ws/rest/ympg/shared/ympgVehicle/' + vehicleId.toString();
             $.ajax({
                 url: url,
                 data: {
-                    'modelOptions': modelOptions
+                    'vehicleId': vehicleId
                 },
                 success: function(responseData) {
-                    console.log(url);
-                    console.log(responseData);
                     if(responseData == undefined) $('#final_mpg').html('<h1>WE were unable to find the MPG for this vehicle</h1>')
                     else {
-                        var modelOptionsListData = responseData.getElementsByTagName('avgMpg')[0];
-                        console.log(modelOptionsListData['textContent'])
+                        var finalMpgData = responseData.getElementsByTagName('avgMpg')[0];
                         var finalMpg = modelOptionsListData['textContent'];
+                        console.log(finalMpg);
                         $('#final_mpg').html(`<h1>${finalMpg}</h1>`)
                         debugger;
                     }
