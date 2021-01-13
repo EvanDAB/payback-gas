@@ -24,8 +24,6 @@ class DistanceCalculatorModel(models.Model):
     start_destination = models.CharField(max_length=100)
     end_destination = models.CharField(max_length=100)
     # api_key AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8
-    
-
 
 #Simple Calcualor Model 
 class SimpleCalculatorModel(models.Model):
