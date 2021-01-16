@@ -29,7 +29,8 @@ def determine_distance(*dest, data_type='json'):
     if r.status_code not in range(200, 299):
         return {}
     # return r.json()
-    dest_details = {}
+    trip_details = []
+    total_trip_mi = 0
     try:
         length_of_rows = len(r.json()['rows'])
         # print(length_of_rows)
@@ -39,7 +40,23 @@ def determine_distance(*dest, data_type='json'):
             # print(len(row))
             for j in range(len(row)):
                 if i == j:
-                    print('(i==j): ', row[j]['distance']['text'])
+                    distText = row[j]['distance']['text']
+                    print('(i==j): ', distText)
+                    trip_details.append(distText)
+        
+        print(trip_details)
+        for k in range(len(trip_details)):
+            print(type(trip_details[k]))
+            print(trip_details[k])
+            last2 = trip_details[k][-2:]
+            
+            if last2 == 'mi':
+                tripVal = float(trip_details[k][:-3])
+                print('Trip Value: (type) ',type(tripVal))
+                print('Trip Value: ', tripVal)
+                total_trip_mi += tripVal
+        
+        print('Total Trip Value: ', total_trip_mi)
         # dest_details = r.json()['rows'][0]
         # return dest_details
     except:
