@@ -23,14 +23,29 @@ def determine_distance(*dest, data_type='json'):
     print(data_type)
     print('origins: ', origins_str)
     print('destinations: ', destinations_str)
-    url = f'{endpoint}?origins={origins_str}&destinations={destinations_str}&key={api_key}'
+    url = f'{endpoint}?origins={origins_str}&destinations={destinations_str}&key={api_key}&units=imperial'
     print(url)
     r = requests.get(url)
     if r.status_code not in range(200, 299):
         return {}
-    return r.json()
+    # return r.json()
+    dest_details = {}
+    try:
+        length_of_rows = len(r.json()['rows'])
+        # print(length_of_rows)
+        for i in range(length_of_rows):
+            row = r.json()['rows'][i]['elements']
+            # print('ROW ', i, ' ', row)
+            # print(len(row))
+            for j in range(len(row)):
+                if i == j:
+                    print('(i==j): ', row[j]['distance']['text'])
+        # dest_details = r.json()['rows'][0]
+        # return dest_details
+    except:
+        pass
 
-print(determine_distance('Sacramento, CA', 'Oakland, CA', 'San Francisco, CA', 'Vallejo, CA'))    
+print(determine_distance('5112 Gorham Ct, Sacramento, CA', '674 23rd St, Oakland, CA', 'San Francisco, CA', 'Vallejo, CA'))    
 
 # def extract_lat_lng(address_or_postalcode, data_type='json'):
 #     endpoint= f"https://maps.googleapis.com/maps/api/geocode/{data_type}"
