@@ -21,10 +21,14 @@ class MPGCalculatorModel(models.Model):
         return self.year
 
 class DistanceCalculatorModel(models.Model):
-    start_destination = models.CharField(max_length=100)
-    end_destination = models.CharField(max_length=100)
-    # api_key AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8
-
+    destination = models.CharField(max_length=100)
+    # end_destination = models.CharField(max_length=100)
+    # # api_key AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8
+    # def __str__(self):
+    #     return self.id
+class DistanceCalculatorModelDestinations(models.Model):
+    dist_fk = models.ForeignKey(DistanceCalculatorModel)
+    
 #Simple Calcualor Model 
 class SimpleCalculatorModel(models.Model):
     mpg=models.DecimalField(max_digits=4, decimal_places=2, null=False)
