@@ -27,8 +27,8 @@ class DistanceCalculatorModel(models.Model):
     # def __str__(self):
     #     return self.id
 class DistanceCalculatorModelDestinations(models.Model):
-    dist_fk = models.ForeignKey(DistanceCalculatorModel)
-    
+    dist_fk = models.ForeignKey('DistanceCalculatorModel', on_delete=models.CASCADE)
+
 #Simple Calcualor Model 
 class SimpleCalculatorModel(models.Model):
     mpg=models.DecimalField(max_digits=4, decimal_places=2, null=False)
