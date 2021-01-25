@@ -28,7 +28,7 @@ DistanceCalculatorFormset = modelformset_factory(
     DistanceCalculatorModel, 
     fields=('destination', ),
     extra=1,
-    widgets={'destiation': forms.TextInput(attrs={
+    widgets={'destination': forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Enter Destination Here'
         })
