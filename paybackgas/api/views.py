@@ -1,10 +1,10 @@
 import requests
 from urllib.parse import urlencode
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.shortcuts import HttpResponse
 from django.views.generic import ListView
-from .forms import SimpleCalculatorForm, MPGCalculatorForm, DistanceCalculatorForm
-# DistanceCalculatorFormSet
+from .forms import SimpleCalculatorForm, MPGCalculatorForm,  DistanceCalculatorFormset
+# DistanceCalculatorForm,
 from .models import DistanceCalculatorModel
 from decimal import Decimal
 #the following were added to see if we could add additional forms on the distance page
@@ -34,7 +34,30 @@ def mpgCalc(request):
         return render(request, 'api/mpg/mpg.html', {'form' : form })
 
 def distanceCalc(request):
-    form = DistanceCalculatorForm
+    template_name='api/distance/distance.html'
+    heading_message='Model Formset Demo'
+
+    if request.method == 'GET':
+        formset = DistanceCalculatorFormset(queryset=DistanceCalculatorModel.objects.none())
+    elif request.method == 'POST':
+        formset = DistanceCalculatorFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                if form.cleaned_data.get('destination'):
+                    form.save()
+                    return redirect('distance')
+    return render(request, template_name, {
+        'formset': formset,
+        'heading': heading_message
+    })
+    # form = DistanceCalculatorForm
+    # return render(request, 'api/distance/distance.html', {'form': form })
+
+    # if dist == None:
+    #     dist = DistanceCalculatorModel.objects.create()
+    # if request.METHOD == 'POST':
+        
+    # form = DistanceCalculatorForm
     # items_formset = inlineformset_factory(Parent, Item, form=ItemForm, extra=1)
     # item_forms = items_formset() 
     # model = DistanceCalculatorModel
@@ -62,4 +85,4 @@ def distanceCalc(request):
     # def get_success_url(self):
     #     return reverse_lazy('disance:distance')
             
-    return render(request, 'api/distance/distance.html', {'form': form })
+    

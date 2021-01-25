@@ -22,6 +22,10 @@ class MPGCalculatorModel(models.Model):
 
 class DistanceCalculatorModel(models.Model):
     destination = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.destination
+        # return self.destination_name
     # end_destination = models.CharField(max_length=100)
     # # api_key AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8
     # def __str__(self):
