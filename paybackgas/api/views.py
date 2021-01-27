@@ -7,6 +7,7 @@ from .forms import SimpleCalculatorForm, MPGCalculatorForm,  DistanceCalculatorF
 # DistanceCalculatorForm,
 from .models import DistanceCalculatorModel
 from decimal import Decimal
+from .google_scrape import determine_distance
 #the following were added to see if we could add additional forms on the distance page
 # from django.forms import formset_factory, inlineformset_factory
 # from django.db import transaction
@@ -39,50 +40,21 @@ def distanceCalc(request):
 
     if request.method == 'GET':
         formset = DistanceCalculatorFormset(queryset=DistanceCalculatorModel.objects.none())
+        # print(formset)
     elif request.method == 'POST':
         formset = DistanceCalculatorFormset(request.POST)
+        print(formset)
         if formset.is_valid():
             for form in formset:
                 if form.cleaned_data.get('destination'):
-                    form.save()
-                    return redirect('distance')
+                    # form.save()
+                    print('CD: ', form.cleaned_data.get('destination'))
+                    # return render(request, 'api/distance/distance-result.html')
     return render(request, template_name, {
         'formset': formset,
         'heading': heading_message
-    })
-    # form = DistanceCalculatorForm
-    # return render(request, 'api/distance/distance.html', {'form': form })
+    }) 
 
-    # if dist == None:
-    #     dist = DistanceCalculatorModel.objects.create()
-    # if request.METHOD == 'POST':
-        
-    # form = DistanceCalculatorForm
-    # items_formset = inlineformset_factory(Parent, Item, form=ItemForm, extra=1)
-    # item_forms = items_formset() 
-    # model = DistanceCalculatorModel
-    # template_name = 'distance/distance.html'
-    # form_class = DistanceCalculatorForm
-    # success_url = None
-   
-    # def get_context_data(self, **kwargs):
-    #     data = super(distanceCalc. self).get_context_data(**kwargs)
-    #     if self.request.POST:
-    #        data['destination'] = DistanceCalculatorFormSet(self.request.POST)
-    #     else:
-    #         data['destination'] = DistanceCalculatorFormSet()
-    #     return data
-    # def form_valid(self, form):
-    #     context = self.get_context_data()
-    #     destinations = context['destination']
-    #     with transacton.atomic():
-    #         self.object = form.save()
-    #         if destinations.is_valid():
-    #             destinations - self.object
-    #             destinations.save()
-    #     return super(DistanceCalculatorModel, self).form_valid(form)
-
-    # def get_success_url(self):
-    #     return reverse_lazy('disance:distance')
-            
-    
+# def distanceScrape(request):
+#     stops = request.GET.get('stops')
+#     print(stops)

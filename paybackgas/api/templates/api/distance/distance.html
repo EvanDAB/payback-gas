@@ -16,7 +16,8 @@
         </div>
         <input type="button" value="Add Destination" id="add_destination">
         <input type="button" value='Test Distance Traveled Button' id="test_dist_sum">
-        </form>
+        <input type="submit" value='Submit' id="add_dist_sum">
+    </form>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -42,12 +43,20 @@
         var element = $('div.destination-container').children().children();
         console.log(element.length);
         console.log(element[0]);
+        var destArr = []
         for (var i=0; i < element.length; i ++) {
             //get values of the destinations
-            console.log(element[i].value);
-        }
-        //how to get value of the input
-        
+            var item = element[i].value
+            console.log(item);
+            destArr.push(item);
+        };
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '{% url "distanceScrape" %}',
+        //     success: function () {
+        //         alert(url)
+        //     }
+        // })
     })
 </script>
 {% endblock %}
