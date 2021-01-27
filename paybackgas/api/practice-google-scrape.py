@@ -1,10 +1,6 @@
 import requests
 from urllib.parse import urlencode, urlparse, parse_qsl
 
-def listToUrlString(s):
-    str1 = "|"
-    return (str1.join(s))
-
 def determine_distance(*dest, data_type='json'):
     api_key = 'AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8'
     endpoint = f'https://maps.googleapis.com/maps/api/distancematrix/{data_type}'
@@ -17,6 +13,10 @@ def determine_distance(*dest, data_type='json'):
     del destinations[0]
     del origins[-1]
 
+    def listToUrlString(s):
+        str1 = "|"
+        return (str1.join(s))
+        
     origins_str = listToUrlString(origins).replace(', ', '+').replace(' ', '+')
     destinations_str = listToUrlString(destinations).replace(', ', '+').replace(' ', '+')
     
