@@ -1,5 +1,4 @@
 import requests
-
 from urllib.parse import urlencode, urlparse, parse_qsl
 
 def determine_distance(*dest, data_type='json'):

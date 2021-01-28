@@ -1,10 +1,6 @@
 from django.db import models
 import datetime
 import requests
-# import bs4
-# import urllib3
-# from bs4 import BeautifulSoup
-# Create your models here.
 
 now = datetime.datetime.now()
 current_year = now.year

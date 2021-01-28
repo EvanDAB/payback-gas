@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" action="">
         {% csrf_token %}
         {{ formset.management_form }}
         <div class='destination-container'>
@@ -19,7 +19,7 @@
         <input type="submit" value='Submit' id="add_dist_sum">
     </form>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type='text/javascript' src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var total = $('#id_form' + '-TOTAL_FORMS').val();
     function cloneMore(selector, type) {
@@ -38,25 +38,51 @@
     }
     $('#add_destination').click(function() {
         cloneMore('div.destination:last', 'form');
-    })
+    });
+    //set header
+
+    //takes in two strings and contactes them for ajax
+    function determineDistance(orig, dest) {
+        var apiKey = 'AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8';
+        var endpoint = 'https://maps.googleapis.com/maps/api/distancematrix/json';
+        console.log(typeof orig);
+        console.log(typeof dest);
+        $.ajax({
+            url: `${endpoint}?origins=${orig}&destinations=${dest}&key=${apiKey}&units=imperial`,
+            contentType: 'application/json',
+            dataType:'json',
+            responseType:'application/json',
+            xhrFields: {
+                withCredentials: false
+            },
+            headers: {
+                'Access-Control-Allow-Credentials' : true,
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods':'GET',
+                'Access-Control-Allow-Headers':'application/json',
+            },
+            success: function(response) {
+                console.log(response);
+            }  
+        })
+        
+    }
     $('#test_dist_sum').click(function() {
         var element = $('div.destination-container').children().children();
-        console.log(element.length);
-        console.log(element[0]);
-        var destArr = []
+        var destArr = [];
         for (var i=0; i < element.length; i ++) {
-            //get values of the destinations
             var item = element[i].value
-            console.log(item);
             destArr.push(item);
         };
-        // $.ajax({
-        //     type: 'POST',
-        //     url: '{% url "distanceScrape" %}',
-        //     success: function () {
-        //         alert(url)
-        //     }
-        // })
-    })
+        var destCopy = [...destArr];
+        destCopy.pop();
+        var origins = destCopy;
+        destArr.shift();
+        var destinations = destArr;
+        var originParamStr = origins.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
+        var destinationParamStr = destinations.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
+        determineDistance(originParamStr, destinationParamStr);
+        
+    });
 </script>
 {% endblock %}

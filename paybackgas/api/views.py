@@ -29,12 +29,12 @@ def main(request):
     return render(request, 'api/home.html', {'form' : form})
 
 
-def mpgCalc(request):
+def mpg_calculator(request):
     if request.method=='GET':
         form =  MPGCalculatorForm(request.GET)
         return render(request, 'api/mpg/mpg.html', {'form' : form })
 
-def distanceCalc(request):
+def distance_calculator(request):
     template_name='api/distance/distance.html'
     heading_message='Model Formset Demo'
 
@@ -43,9 +43,10 @@ def distanceCalc(request):
         # print(formset)
     elif request.method == 'POST':
         formset = DistanceCalculatorFormset(request.POST)
-        print(formset)
+        print('formset: ', formset)
         if formset.is_valid():
             for form in formset:
+                print('form: ', form)
                 if form.cleaned_data.get('destination'):
                     # form.save()
                     print('CD: ', form.cleaned_data.get('destination'))
@@ -55,6 +56,7 @@ def distanceCalc(request):
         'heading': heading_message
     }) 
 
-# def distanceScrape(request):
-#     stops = request.GET.get('stops')
-#     print(stops)
+def google_scrape(request):
+    print(request)
+    
+

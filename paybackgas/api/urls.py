@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import main, mpgCalc, distanceCalc
+from .views import main, mpg_calculator, distance_calculator, google_scrape
 # from . import views
 
 urlpatterns = [
     path('', main),
-    path('mpg/', mpgCalc),
-    path('distance/', distanceCalc)
-
+    path('mpg/', mpg_calculator),
+    path('distance/', distance_calculator),
+    path('google/', google_scrape)
 ]
