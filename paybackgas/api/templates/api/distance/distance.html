@@ -62,7 +62,7 @@
                 for(var j=0; j<row.length; j++){
                     if (i==j) {
                         var distText = row[j]['distance']['text']
-                        console.log('i==j: ', distText)
+                        console.log('i==j: ', distText);
                         tripDetails.push(distText)
                     }
                 }
@@ -72,12 +72,16 @@
                 var units = tripDetails[i].slice(-2);
                 console.log(units);
                 if (units == 'mi') {
-                    var tripVal = parseFloat(tripDetails[i].slice(-3)).toFixed(2);
-                    console.log('Trip Value', tripVal);
-                    // totalTripMi += tripVal
+                    console.log(tripDetails[i]);
+                    var tripVal = parseFloat(tripDetails[i].slice(0,-3));
+                    console.log('Trip Value', typeof tripVal, ' ', tripVal);
+
+                    totalTripMi += tripVal;
+                    console.log('Total Trip (Mi)', typeof totalTripMi, ' ', totalTripMi)
                 }
             }
-            // console.log('Total Trip Value: ', totalTripMi);
+            console.log('Total Trip Value: ', totalTripMi);
+            return totalTripMi;
 
         })
         .catch((err) => console.log(err))
@@ -99,30 +103,7 @@
         var originParamStr = origins.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
         var destinationParamStr = destinations.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
         var url = `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=imperial`;
-        console.log(url);
         makeAjaxCall(url);
-        // $('#get_dist_mat_url').html(`<input type='button' id='get_trip_total' data-url=${url} value='Click Here'>`);
     });
-
-       
-    //     $.ajax({
-    //         // crossDomain: true,
-    //         // dataType: 'jsonp', //this bypasses XMLHTTPError but still gets CORB warning
-    //         // dataType: 'json',
-    //         headers: {
-    //             Accept : "text/javascript; charset=utf-8",
-    //             "Content-Type": "text/javascript; charset=utf-8"
-    //         },
-    //         type: "GET",  
-    //         dataType: "jsonp",
-    //         beforeSend: function(xhr){
-    //             xhr.setRequestHeader('Access-Control-Allow-origin', 'true');
-    //         },
-    //         url: `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=imperial`,
-    //         success: function(response) {
-    //             console.log(response);
-    //         }  
-      //  }) 
-   
 </script>
 {% endblock %}
