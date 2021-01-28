@@ -15,12 +15,12 @@
             {% endfor %}
         </div>
         <input type="button" value="Add Destination" id="add_destination">
-        <input type="button" value='Confirm Trip' id="test_dist_sum">
-        <div id='get_dist_mat_url'></div>
+        <input type="button" value='Test Distance Traveled Button' id="test_dist_sum">
+        <input type="submit" value='Submit' id="add_dist_sum">
     </form>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
+<script type='text/javascript' src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type='text/javascript' >
     var total = $('#id_form' + '-TOTAL_FORMS').val();
     function cloneMore(selector, type) {
         var newElement = $(selector).clone(true);
@@ -39,26 +39,10 @@
     $('#add_destination').click(function() {
         cloneMore('div.destination:last', 'form');
     });
-    function makeAjaxCall(link) {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/"
-        fetch(proxyurl + link, {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-                "Accept": 'application/json',
-                'Access-Control-Allow-Origin': '*' 
-            }
-        })
-        .then((data) => data.json())
-        .then((resp) => {
-            console.log(resp)
-            var rowLength = resp['rows'].length;
-            console.log(rowLength);
+    //set header
 
-        })
-        .catch((err) => console.log(err))
-    };
+    //takes in two strings and contactes them for ajax
+ 
     $('#test_dist_sum').click(function() {
         var apiKey = 'AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8';
         var endpoint = 'https://maps.googleapis.com/maps/api/distancematrix/json';
@@ -75,31 +59,26 @@
         var destinations = destArr;
         var originParamStr = origins.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
         var destinationParamStr = destinations.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
-        var url = `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=imperial`;
-        console.log(url);
-        makeAjaxCall(url);
-        // $('#get_dist_mat_url').html(`<input type='button' id='get_trip_total' data-url=${url} value='Click Here'>`);
+        $.ajax({
+            // crossDomain: true,
+            // dataType: 'jsonp', //this bypasses XMLHTTPError but still gets CORB warning
+            // dataType: 'json',
+            headers: {
+                Accept : "text/javascript; charset=utf-8",
+                "Content-Type": "text/javascript; charset=utf-8"
+            },
+            type: "GET",  
+            dataType: "jsonp",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader('Access-Control-Allow-origin', 'true');
+            },
+            url: `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=imperial`,
+            success: function(response) {
+                console.log(response);
+            }  
+        })
+        
+        
     });
-
-       
-    //     $.ajax({
-    //         // crossDomain: true,
-    //         // dataType: 'jsonp', //this bypasses XMLHTTPError but still gets CORB warning
-    //         // dataType: 'json',
-    //         headers: {
-    //             Accept : "text/javascript; charset=utf-8",
-    //             "Content-Type": "text/javascript; charset=utf-8"
-    //         },
-    //         type: "GET",  
-    //         dataType: "jsonp",
-    //         beforeSend: function(xhr){
-    //             xhr.setRequestHeader('Access-Control-Allow-origin', 'true');
-    //         },
-    //         url: `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=imperial`,
-    //         success: function(response) {
-    //             console.log(response);
-    //         }  
-      //  }) 
-   
 </script>
 {% endblock %}

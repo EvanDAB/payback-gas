@@ -6,5 +6,6 @@ urlpatterns = [
     path('', main),
     path('mpg/', mpg_calculator),
     path('distance/', distance_calculator),
-    path('google/', google_scrape)
+    path('distance/google_scrape/', google_scrape)
+
 ]

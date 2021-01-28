@@ -36,9 +36,6 @@
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/make?year=' + year.toString();
         $.ajax({
             url: url,
-            data: {
-            'year': year
-            },
             success: function(responseData) {
                 var makeListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
                 var makeList = [];
@@ -60,9 +57,6 @@
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/model?year=' + globalYear.toString() + '&make=' + make;
         $.ajax({
             url: url,
-            data: {
-                'make': make
-            },
             success: function(responseData) {
                 var modelListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
                 var modelList = [];
@@ -84,9 +78,6 @@
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/options?year='+ globalYear.toString() + '&make=' + globalMake + '&model=' + model
         $.ajax({
             url: url,
-            data: {
-                'model': model
-            },
             success: function(responseData) {
                 var modelOptionsListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
                 var modelOptionsList = [];
@@ -107,9 +98,6 @@
             var url = 'https://fueleconomy.gov/ws/rest/ympg/shared/ympgVehicle/' + vehicleId.toString();
             $.ajax({
                 url: url,
-                data: {
-                    'vehicleId': vehicleId
-                },
                 success: function(responseData) {
                     if(responseData == undefined) $('#final_mpg').html('<h1>WE were unable to find the MPG for this vehicle</h1>')
                     else {

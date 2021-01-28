@@ -1,17 +1,14 @@
 import requests
 from urllib.parse import urlencode
 from django.shortcuts import render, redirect
-from django.shortcuts import HttpResponse
-from django.views.generic import ListView
+from django.shortcuts import HttpResponse, redirect
+from django.views.generic import TemplateView
 from .forms import SimpleCalculatorForm, MPGCalculatorForm,  DistanceCalculatorFormset
-# DistanceCalculatorForm,
 from .models import DistanceCalculatorModel
 from decimal import Decimal
-from .google_scrape import determine_distance
-#the following were added to see if we could add additional forms on the distance page
-# from django.forms import formset_factory, inlineformset_factory
-# from django.db import transaction
-# from django.urls import reverse_lazy
+from .google_scrape import determine_distance as google_scrape
+from django.urls import reverse_lazy
+
 
 # Create your views here.
 def main(request):
@@ -55,8 +52,3 @@ def distance_calculator(request):
         'formset': formset,
         'heading': heading_message
     }) 
-
-def google_scrape(request):
-    print(request)
-    
-
