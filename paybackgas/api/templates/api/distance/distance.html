@@ -16,7 +16,7 @@
         </div>
         <input type="button" value="Add Destination" id="add_destination">
         <input type="button" value='Confirm Trip' id="test_dist_sum">
-        <div id='get_dist_mat_url'></div>
+        <div id='trip_val'></div>
     </form>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -81,7 +81,7 @@
                 }
             }
             console.log('Total Trip Value: ', totalTripMi);
-            return totalTripMi;
+            $('#trip_val').html(`<h1>Total Distance Traveled is ${totalTripMi} ${units=='mi'? 'miles' : 'meters'}</h1>`)
 
         })
         .catch((err) => console.log(err))
