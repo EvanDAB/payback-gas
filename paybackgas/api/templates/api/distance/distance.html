@@ -40,7 +40,7 @@
         cloneMore('div.destination:last', 'form');
     });
     function makeAjaxCall(link) {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/"
+        const proxyurl = "https://infinite-springs-10776.herokuapp.com/"
         var tripDetails = [];
         var totalTripMi = 0;
         fetch(proxyurl + link, {
@@ -73,10 +73,11 @@
                 console.log(units);
                 if (units == 'mi') {
                     var tripVal = parseFloat(tripDetails[i].slice(-3)).toFixed(2);
-                    totalTripMi += tripVal
+                    console.log('Trip Value', tripVal);
+                    // totalTripMi += tripVal
                 }
             }
-            console.log('Total Trip Value: ', totalTripMi);
+            // console.log('Total Trip Value: ', totalTripMi);
 
         })
         .catch((err) => console.log(err))
