@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- <form action='result.html' method='GET' id='simpleForm'> -->
 <form method='GET' id='simpleForm'>
     {% csrf_token %}
     <label>MPG</label>
     {{ form.mpg }}
-    <p>if you don't know your car's mpg <a href='#'>click here!</a></p>
+    <p>if you don't know your car's mpg <a href='/mpg/'>click here!</a></p>
     <label>Distance</label>
     {{ form.distance }}
-    <p>if you don't know the distance traveled <a href='#'>click here!</a></p>
+    <p>if you don't know the distance traveled <a href='/distance/'>click here!</a></p>
     <label>Gas Price</label>
     {{ form.gas_price }}
-    
     <input type="submit" value="Submit">
 </form>
 {% endblock %}

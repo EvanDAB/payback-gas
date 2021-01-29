@@ -3,21 +3,20 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
+<div id='trip_val'></div>
 <form class="form-horizontal" action="">
-        {% csrf_token %}
-        {{ formset.management_form }}
-        <div class='destination-container'>
-            {% for form in formset %}
-                <div class='destination'>
-                    {{ form.destination }}
-                </div>
-            {% endfor %}
-        </div>
-        <input type="button" value="Add Destination" id="add_destination">
-        <input type="button" value='Confirm Trip' id="test_dist_sum">
-        <div id='trip_val'></div>
-    </form>
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <div class='destination-container'>
+        {% for form in formset %}
+            <div class='destination'>
+                {{ form.destination }}
+            </div>
+        {% endfor %}
+    </div>
+    <input type="button" value="Add Destination" id="add_destination">
+    <input type="button" value='Confirm Trip' id="test_dist_sum">
+</form>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -26,10 +25,7 @@
         var newElement = $(selector).clone(true);
         newElement.find(':input').each(function() {
             var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
-            console.log(total);
-            console.log(name);
             var id = 'id_' + name;
-            console.log(id);
             $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
         });
         total ++;
