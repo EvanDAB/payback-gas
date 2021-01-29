@@ -7,6 +7,20 @@ class SimpleCalculatorForm(ModelForm):
     class Meta:
         model=SimpleCalculatorModel
         fields="__all__"
+        widgets={
+            'mpg': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Miles Per Gallon Here'
+            }),
+            'distance': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Distance Traveled Here'
+            }),
+            'gas_price': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Gas Price Here'
+            })
+        }
 
 class MPGCalculatorForm(ModelForm):
     class Meta:

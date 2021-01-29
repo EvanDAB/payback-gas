@@ -1,16 +1,25 @@
 {% extends "base.html" %}
 
+{% block title %}Home{% endblock %}
+
 {% block content %}
 <form method='GET' id='simpleForm'>
     {% csrf_token %}
-    <label>MPG</label>
-    {{ form.mpg }}
-    <p>if you don't know your car's mpg <a href='/mpg/'>click here!</a></p>
-    <label>Distance</label>
-    {{ form.distance }}
-    <p>if you don't know the distance traveled <a href='/distance/'>click here!</a></p>
-    <label>Gas Price</label>
-    {{ form.gas_price }}
-    <input type="submit" value="Submit">
+    <div class='form-group' style='padding: 5%; margin-bottom: 5%; background-color: lightgrey; border: 1px black solid' id='mpg-form'> 
+        {{ form.mpg }}
+        <center><p style='color: #12C064'>OR</p></center>
+        <a class='btn btn-primary form-control' href='/mpg/'>Calculate MPG</a>
+    </div>
+    <div class='form-group' id='distance-form'> 
+        {{ form.distance }}
+        <center><p style='color: #12C064'>OR</p></center>
+        <a class='btn btn-primary form-control' href='/distance/'>Calculate MPG</a>
+    </div>
+    <div class='form-group' id='gas-price-form'> 
+        {{ form.gas_price }}
+     
+    </div>
+    <input type="submit" class='form-control' value="Submit">
+    
 </form>
 {% endblock %}

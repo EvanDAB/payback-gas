@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Distance Calculator{% endblock %}
 
 {% block content %}
+<div class='returnHome'>
+    <a class='btn btn-primary' href='/'>Return to Form</a>
+</div>
 <h1>The total distance traveled is... <span id='trip_val'></span> 
     <select name="units" id='units'>
         <option value='metric'>killometers</option>
