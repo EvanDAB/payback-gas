@@ -54,35 +54,18 @@
         })
         .then((data) => data.json())
         .then((resp) => {
-            console.log(resp)
             var rowLength = resp['rows'].length;
-            console.log(rowLength);
             for(var i=0; i<rowLength; i++) {
                 var row = resp['rows'][i]['elements']
                 for(var j=0; j<row.length; j++){
-                    if (i==j) {
-                        var distText = row[j]['distance']['text']
-                        console.log('i==j: ', distText);
-                        tripDetails.push(distText)
-                    }
+                    if (i==j) tripDetails.push(row[j]['distance']['text']);
                 }
             }
-            console.log(tripDetails);
             for(var i=0; i<tripDetails.length; i++){
                 var units = tripDetails[i].slice(-2);
-                console.log(units);
-                if (units == 'mi') {
-                    console.log(tripDetails[i]);
-                    var tripVal = parseFloat(tripDetails[i].slice(0,-3));
-                    console.log('Trip Value', typeof tripVal, ' ', tripVal);
-
-                    totalTripMi += tripVal;
-                    console.log('Total Trip (Mi)', typeof totalTripMi, ' ', totalTripMi)
-                }
+                if (units == 'mi') totalTripMi += parseFloat(tripDetails[i].slice(0,-3));
             }
-            console.log('Total Trip Value: ', totalTripMi);
             $('#trip_val').html(`<h1>Total Distance Traveled is ${totalTripMi} ${units=='mi'? 'miles' : 'meters'}</h1>`)
-
         })
         .catch((err) => console.log(err))
     };
