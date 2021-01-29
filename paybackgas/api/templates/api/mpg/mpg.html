@@ -4,6 +4,8 @@
 
 {% block content %}
 <h2>MPG Calculator</h2>
+<h1>Your MPG <span id='final_mpg'></span></h1>
+</h1>
 {% csrf_token %}
 <div>
     <label>Year</label>
@@ -21,10 +23,6 @@
     <label>Model Options</label>
     <select id='model_options'></select>
 </div>
-<div>
-    <label>Your Average MPG</label>
-    <div id='final_mpg'></div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -34,6 +32,7 @@
         var year = 1984 + parseInt(yearVal);
         globalYear = year;
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/make?year=' + year.toString();
+        console.log(url);
         $.ajax({
             url: url,
             success: function(responseData) {
@@ -55,6 +54,7 @@
         var make = $(this).val();
         globalMake = make;
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/model?year=' + globalYear.toString() + '&make=' + make;
+        console.log(url);
         $.ajax({
             url: url,
             success: function(responseData) {
@@ -76,9 +76,12 @@
         var model = $(this).val();
         globalModel = model;
         var url = 'https://fueleconomy.gov/ws/rest/vehicle/menu/options?year='+ globalYear.toString() + '&make=' + globalMake + '&model=' + model
+        console.log(url);
         $.ajax({
             url: url,
             success: function(responseData) {
+                //2018 Hondoa Accord 2.0t Sport/Touring/ Auto 10-spd, 4 cyl 2.0L, Turbo
+                console.log(responseData);
                 var modelOptionsListData = responseData.getElementsByTagName('menuItems')[0].childNodes;
                 var modelOptionsList = [];
                 for(var i=0; i < modelOptionsListData.length; i++) {
@@ -96,15 +99,32 @@
         $('#model_options').change(function() {
             var vehicleId = $(this).val();
             var url = 'https://fueleconomy.gov/ws/rest/ympg/shared/ympgVehicle/' + vehicleId.toString();
+            console.log(url);
             $.ajax({
                 url: url,
                 success: function(responseData) {
-                    if(responseData == undefined) $('#final_mpg').html('<h1>WE were unable to find the MPG for this vehicle</h1>')
+                    if(responseData == undefined) {
+                        const proxyurl = "https://infinite-springs-10776.herokuapp.com/"
+                        var newUrl = 'https://fueleconomy.gov/feg/noframes/' + vehicleId.toString();
+                        $.ajax({
+                            url: proxyurl + newUrl + '.shtml',
+                            success: function(respData) {
+                                function getCombinedMPGHTML(data){
+                                    var combinedMPGHTML = data.slice(data.search('Combined MPG'), data.search('Combined MPG')+ 25);
+                                    console.log(combinedMPGHTML);
+                                    var combinedMPG = combinedMPGHTML.replace(/\D/g,'');
+                                    console.log(combinedMPG);
+                                    $('#final_mpg').html(`<h1> (Combined): ${combinedMPG}</h1>`)
+                                }
+                                getCombinedMPGHTML(respData);
+                            }
+                        })
+                    }
                     else {
                         var finalMpgData = responseData.getElementsByTagName('avgMpg')[0];
-                        var finalMpg = modelOptionsListData['textContent'];
+                        var finalMpg = finalMpgData['textContent'];
                         console.log(finalMpg);
-                        $('#final_mpg').html(`<h1>${finalMpg}</h1>`)
+                        $('#final_mpg').html(`<h1>(Average): ${finalMpg}</h1>`)
                     }
                 }
             })

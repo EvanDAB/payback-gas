@@ -3,7 +3,12 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div id='trip_val'></div>
+<h1>The total distance traveled is... <span id='trip_val'></span> 
+    <select name="units" id='units'>
+        <option value='metric'>killometers</option>
+        <option value='imperial'>miles</option>
+    </select>
+</h1>
 <form class="form-horizontal" action="">
     {% csrf_token %}
     {{ formset.management_form }}
@@ -59,13 +64,15 @@
             }
             for(var i=0; i<tripDetails.length; i++){
                 var units = tripDetails[i].slice(-2);
-                if (units == 'mi') totalTripMi += parseFloat(tripDetails[i].slice(0,-3));
+                console.log(units)
+                totalTripMi += parseFloat(tripDetails[i].slice(0,-3));
             }
-            $('#trip_val').html(`<h1>Total Distance Traveled is ${totalTripMi} ${units=='mi'? 'miles' : 'meters'}</h1>`)
+            $('#trip_val').html(`<h2>${totalTripMi} ${units=='mi'? 'miles' : 'meters'}</h2>`)
         })
         .catch((err) => console.log(err))
     };
     $('#test_dist_sum').click(function() {
+        var units = $('#units').val();
         var apiKey = 'AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8';
         var endpoint = 'https://maps.googleapis.com/maps/api/distancematrix/json';
         var element = $('div.destination-container').children().children();
@@ -81,7 +88,7 @@
         var destinations = destArr;
         var originParamStr = origins.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
         var destinationParamStr = destinations.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
-        var url = `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=imperial`;
+        var url = `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=${units}`;
         makeAjaxCall(url);
     });
 </script>
