@@ -5,19 +5,18 @@
 {% block content %}
 <form method='GET' id='simpleForm'>
     {% csrf_token %}
-    <div class='form-group' style='padding: 5%; margin-bottom: 5%; background-color: lightgrey; border: 1px black solid' id='mpg-form'> 
+    <div class='form-group' id='mpg-form'> 
         {{ form.mpg }}
-        <center><p style='color: #12C064'>OR</p></center>
+        <center><p class='or'>OR</p></center>
         <a class='btn btn-primary form-control' href='/mpg/'>Calculate MPG</a>
     </div>
     <div class='form-group' id='distance-form'> 
         {{ form.distance }}
-        <center><p style='color: #12C064'>OR</p></center>
+        <center><p class='or'>OR</p></center>
         <a class='btn btn-primary form-control' href='/distance/'>Calculate MPG</a>
     </div>
     <div class='form-group' id='gas-price-form'> 
         {{ form.gas_price }}
-     
     </div>
     <input type="submit" class='form-control' value="Submit">
     

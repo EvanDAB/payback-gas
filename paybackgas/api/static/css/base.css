@@ -1,10 +1,13 @@
-/* @import url(http://fonts.googleapis.com/css?family=Muli);
+@import url(http://fonts.googleapis.com/css?family=Muli);
 .or {
-    color: #fff;
+    color: #12c064;
 }
 
 .form-group {
-    padding-bottom: 100%;
+    padding: 5%; 
+    background-color: lightgrey; 
+    border: 1px black solid;
+    border-radius: 5%;
 }
 
 body {
@@ -45,7 +48,7 @@ ol {
 #header {
     padding:10px 100px;
     font-size:14px;
-    background:#fff;
+    background:#12c064;
     color:#0000;
     border-bottom:4px solid #1cdf78;
     overflow:auto;
@@ -54,7 +57,7 @@ ol {
 #header .logo {
     font-family: 'Muli', sans-serif;
     float:left;
-    /* color:#f3f7cc; 
+    color:white; 
     font-size:20px;
     margin-right:10%;
 }
@@ -63,6 +66,7 @@ ol {
     padding:30px 100px;
 }
 
+/* forms */
 form {
     overflow:auto;
 }
@@ -94,5 +98,4 @@ input[type=submit], a.button {
     padding:10px 20px;
     font-size:14px;
     text-transform:uppercase;
-} */
-
+}
