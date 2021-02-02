@@ -3,27 +3,33 @@
 {% block title %}Distance Calculator{% endblock %}
 
 {% block content %}
-<div class='returnHome'>
-    <a class='btn btn-primary' href='/'>Return to Form</a>
-</div>
+<div class='row'>
+        <div class='col-9 '><h2>Distance Calculator</h2></div>
+        <div class='col-3'><a class='btn btn-primary' href='/'>Return to Form</a></div>
+    </div>
 <h1>The total distance traveled is... <span id='trip_val'></span> 
-    <select name="units" id='units'>
+    <!-- <select name="units" id='units'>
         <option value='metric'>killometers</option>
         <option value='imperial'>miles</option>
-    </select>
+    </select> -->
 </h1>
 <form class="form-horizontal" action="">
     {% csrf_token %}
     {{ formset.management_form }}
-    <div class='destination-container'>
+    <div class='destination-container row'>
         {% for form in formset %}
-            <div class='destination'>
+            <div class='destination col-12'>
                 {{ form.destination }}
             </div>
         {% endfor %}
     </div>
-    <input type="button" value="Add Destination" id="add_destination">
-    <input type="button" value='Confirm Trip' id="test_dist_sum">
+    <div class='row'>
+        <div class='col-12'>
+            <input type="button" value="Add Destination" class='btn btn-primary' id="add_destination">
+        </div>
+    </div>
+    
+    <input type="button" value='Confirm Trip' class='btn btn-primary' id="confirm_trip">
 </form>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -75,7 +81,7 @@
         .catch((err) => console.log(err))
     };
     $('#test_dist_sum').click(function() {
-        var units = $('#units').val();
+        // var units = $('#units').val();
         var apiKey = 'AIzaSyCNyQlXhkdhJQ4iczZl79qrzPf8EJXhzL8';
         var endpoint = 'https://maps.googleapis.com/maps/api/distancematrix/json';
         var element = $('div.destination-container').children().children();
@@ -91,7 +97,7 @@
         var destinations = destArr;
         var originParamStr = origins.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
         var destinationParamStr = destinations.join('|').replace(/, /gi, '+').replace(/ /gi, '+');
-        var url = `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=${units}`;
+        var url = `${endpoint}?origins=${originParamStr}&destinations=${destinationParamStr}&key=${apiKey}&units=imperial`;
         makeAjaxCall(url);
     });
 </script>

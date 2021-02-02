@@ -28,7 +28,7 @@ class MPGCalculatorForm(ModelForm):
         fields="__all__"
         widgets={
             'year': forms.Select(attrs={
-                'class': 'custom-select'
+                'class': 'col-8 custom-select'
             })
         }
 

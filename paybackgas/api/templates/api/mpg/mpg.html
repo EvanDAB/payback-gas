@@ -9,23 +9,23 @@
 </div>
 {% csrf_token %}
 <div class='row'> 
-    <label class='col-6 text-right mpg-label'>Year</label>
-    <div class='col-6'>{{ form.year }}</div>
-</div>
-<div>
-    <label>Make</label>
-    <select id='make'></select>
-</div>
-<div>
-    <label>Model</label>
-    <select id='model'></select>
-</div>
-<div>
-    <label>Model Options</label>
-    <select id='model_options'></select>
+    <label class='col-4 text-left custom-label'>Year</label>
+    {{ form.year }}
 </div>
 <div class='row'>
-    <div class='col-12'><h1>Your Vehicle's MPG is... <span id='final_mpg'></span></h1></div>
+    <label class='col-4 text-left custom-label'>Make</label>
+    <select class='col-8 custom-select' id='make'></select>
+</div>
+<div class='row'>
+    <label class='col-4 text-left custom-label'>Model</label>
+    <select class='col-8 custom-select' id='model'></select>
+</div>
+<div class='row'>
+    <label class='col-4 text-left custom-label'>Model Options</label>
+    <select class='col-8 custom-select' id='model_options'></select>
+</div>
+<div class='row'>
+    <div class='col-12 text-center'><h1>Your Vehicle's MPG is... <span id='final_mpg'></span></h1></div>
 </div>
     
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
