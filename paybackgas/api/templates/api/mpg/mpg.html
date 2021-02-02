@@ -3,16 +3,14 @@
 {% block title %}MPG Calculator{% endblock %}
 
 {% block content %}
-<div class='returnHome'>
-    <a class='btn btn-primary' href='/'>Return to Form</a>
+<div class='row'>
+    <div class='col-9 '><h2>MPG Calculator</h2></div>
+    <div class='col-3'><a class='btn btn-primary' href='/'>Return to Form</a></div>
 </div>
-<h2>MPG Calculator</h2>
-<h1>Your MPG <span id='final_mpg'></span></h1>
-</h1>
 {% csrf_token %}
-<div>
-    <label>Year</label>
-    {{ form.year }}
+<div class='row'> 
+    <label class='col-6 text-right mpg-label'>Year</label>
+    <div class='col-6'>{{ form.year }}</div>
 </div>
 <div>
     <label>Make</label>
@@ -26,7 +24,10 @@
     <label>Model Options</label>
     <select id='model_options'></select>
 </div>
-
+<div class='row'>
+    <div class='col-12'><h1>Your Vehicle's MPG is... <span id='final_mpg'></span></h1></div>
+</div>
+    
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     var globalYear, globalMake, globalModel;

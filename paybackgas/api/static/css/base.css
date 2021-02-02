@@ -1,4 +1,5 @@
 /* General */
+
 html {
     font-size: 1rem;
 }
@@ -8,19 +9,21 @@ body {
     margin:0;
     padding:0;
     font-family:helvetica, sans-serif;
-    height: 100vh;
-    width: 100vw;
+    /* height: 100vh;
+    width: 100vw; */
 }
 
 /* Logo */
 #header .logo { /* Selects all elements with name2 that is a descendant of an element with name1 */
     font-family: 'Muli', sans-serif;
     color:white; 
-    margin-right:10%;
     font-weight: bold;
-    letter-spacing: -1.25rem;
     font-style: italic;
-    font-size: 15vh;
+    letter-spacing: -3.5vh;
+    font-size: 11vh;
+    /* letter-spacing:  -2.0vh; 
+    
+    font-size: 11vh; */
 }
 #header .logo #gas-text {
     color: #E8664A;
@@ -38,8 +41,9 @@ body {
     /* font-size: 3rem; */
     color:#0000;
     overflow:auto;
-    height: 25vh;
+    
     display: block;
+    border-bottom: 1vh lightgrey solid;
 }
 
 /* Form */
@@ -65,16 +69,31 @@ body {
     font-style: italic;
     font-size: 1.5rem;
 }
-#finalCalc {
-    margin: auto;
-    padding: 1rem;
-    width: 25vw; 
+.mpg-label {
+    font-size: 5vh;
+}
+.custom-select {
+    font-size: 3vh;
+}
+.final-calc-container {
+    /* background: black; */
+    width: 33%; 
     height: 25vh;
-    font-size: 10vh;
-    color: #6FAC43;
-    background: #A3CD44;
+}
+/* #finalCalc {
+    /* margin: auto;
     border-radius: 50%;
-    border: 0.25rem #6FAC43 solid;
+    /* width: 100%;
+    height: 25vh; 
+    padding-bottom: 100%;
+    font-size: 16vh;
+    vertical-align: center;
+    */
+#finalCalc {
+    float: right;
+    color: white;
+    background: #A3CD44;
+    border: 0.2rem #6FAC43 solid;
 }
 #finalCalc:hover {
     color: white;

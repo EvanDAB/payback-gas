@@ -9,15 +9,15 @@ class SimpleCalculatorForm(ModelForm):
         fields="__all__"
         widgets={
             'mpg': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control input-lg',
                 'placeholder': 'Enter MPG'
             }),
             'distance': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control input-lg',
                 'placeholder': 'Enter Total Trip (mi)'
             }),
             'gas_price': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control input-lg',
                 'placeholder': 'Enter Gas Price'
             })
         }
@@ -26,6 +26,11 @@ class MPGCalculatorForm(ModelForm):
     class Meta:
         model=MPGCalculatorModel 
         fields="__all__"
+        widgets={
+            'year': forms.Select(attrs={
+                'class': 'custom-select'
+            })
+        }
 
 DistanceCalculatorFormset = modelformset_factory(
     DistanceCalculatorModel, 
